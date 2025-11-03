@@ -5,6 +5,8 @@ import GlobalStyles from './styles';
 import { App } from './app';
 import { Layout } from './app/components/Layout';
 import { WalletProvider } from './app/context/WalletContext';
+import { Buffer } from 'buffer';
+if (!window.Buffer) window.Buffer = Buffer;
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
