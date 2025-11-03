@@ -1,0 +1,217 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "x402 Facilitator API",
+    "description": "Placeholder API specification for the x402 Facilitator service. This mock spec provides example endpoints for payment sessions, verification, and tokens until the live API is connected.",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://facilitator.x402.io/api",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/payment/session": {
+      "post": {
+        "summary": "Create a new payment session",
+        "description": "Initializes a new payment request between buyer and seller through the x402 Facilitator.",
+        "operationId": "createPaymentSession",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "example": "1.00"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "example": "USDC"
+                  },
+                  "to": {
+                    "type": "string",
+                    "example": "merchant.api"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Premium API Access"
+                  }
+                },
+                "required": ["amount", "currency", "to"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment session created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sessionId": {
+                      "type": "string",
+                      "example": "sess_abc123"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "pending"
+                    },
+                    "expiresIn": {
+                      "type": "integer",
+                      "example": 600
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/verify": {
+      "get": {
+        "summary": "Verify a payment session",
+        "description": "Checks the current status of a payment session by `sessionId`.",
+        "operationId": "verifyPayment",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "sess_abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session verified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "completed"
+                    },
+                    "txHash": {
+                      "type": "string",
+                      "example": "0xabc123..."
+                    },
+                    "payer": {
+                      "type": "string",
+                      "example": "0xBuyerAddress"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens": {
+      "get": {
+        "summary": "List supported tokens",
+        "description": "Retrieves a list of supported payment tokens and networks.",
+        "operationId": "listTokens",
+        "responses": {
+          "200": {
+            "description": "List of supported tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tokens": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "symbol": { "type": "string", "example": "USDC" },
+                          "network": {
+                            "type": "string",
+                            "example": "Ethereum"
+                          },
+                          "decimals": { "type": "integer", "example": 6 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhooks/register": {
+      "post": {
+        "summary": "Register a webhook",
+        "description": "Registers a webhook for receiving payment events from the x402 Facilitator.",
+        "operationId": "registerWebhook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "example": "https://merchant.example.com/webhooks/x402"
+                  },
+                  "events": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "payment.completed"
+                    }
+                  }
+                },
+                "required": ["url", "events"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Webhook successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhookId": {
+                      "type": "string",
+                      "example": "wh_123"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "active"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
