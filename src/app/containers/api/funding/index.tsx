@@ -91,7 +91,7 @@ export const Funding = () => {
   "message": "Mainnet facilitator funding & donation addresses for operational gas, liquidity top-ups, or community support.",
   "networks": {
     "base": {
-      "facilitatorAddress": "0x5AEd85f843496E0e034438a33B66025D8A319359",
+      "facilitatorAddress": "0x3Ae2Ece687547dDAb575739157Da04019a7e9C8A",
       "asset": "USDC",
       "donation": {
         "enabled": true,
