@@ -109,9 +109,9 @@ export const Supported = () => {
           title: 'Verify Payment',
           href: '/api/verify',
         }}
-        nextGroup={{
-          title: 'Schemas',
-          href: '/schema/payment-session',
+        prev={{
+          title: 'Discover Facilitator',
+          href: '/api/discover',
         }}
       />
     </Content>

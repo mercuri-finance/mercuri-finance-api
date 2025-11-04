@@ -381,6 +381,12 @@ export const RequestPanel = () => {
       if (headings === 'supported') {
         url = `${API_BASE}/v2/x402/supported`;
         options = { method: 'GET' };
+      } else if (headings === 'discover') {
+        url = `${API_BASE}/v2/x402/discover`;
+        options = { method: 'GET' };
+      } else if (headings === 'funding') {
+        url = `${API_BASE}/funding`;
+        options = { method: 'GET' };
       } else if (headings === 'verify' || headings === 'settle') {
         if (!validateToAddress()) return;
         if (signStatus !== 'success' || !paymentHeader) return;
@@ -478,7 +484,9 @@ export const RequestPanel = () => {
     <Wrapper>
       <ScrollArea>
         {/* 🧭 Show API Playground only for certain pages */}
-        {['supported', 'verify', 'settle'].includes(headings) ? (
+        {['supported', 'discover', 'funding', 'verify', 'settle'].includes(
+          headings
+        ) ? (
           <>
             {headings === 'supported' && (
               <FormGroup>
@@ -486,6 +494,26 @@ export const RequestPanel = () => {
                 <br />
                 <Button variant="secondary" onClick={handleSend}>
                   Fetch Supported Kinds
+                </Button>
+              </FormGroup>
+            )}
+
+            {headings === 'funding' && (
+              <FormGroup>
+                <h3>Try It Out</h3>
+                <br />
+                <Button variant="secondary" onClick={handleSend}>
+                  Fetch Funding Addresses
+                </Button>
+              </FormGroup>
+            )}
+
+            {headings === 'discover' && (
+              <FormGroup>
+                <h3>Try It Out</h3>
+                <br />
+                <Button variant="secondary" onClick={handleSend}>
+                  Discover Facilitator Info
                 </Button>
               </FormGroup>
             )}

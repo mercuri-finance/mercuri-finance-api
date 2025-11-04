@@ -5,6 +5,7 @@ import { CodeBlock } from '../../../components/CodeBlock';
 import { SchemaTable } from '../../../components/SchemaTable';
 import { Label } from '@/app/components/Label';
 import { PageFooterNav } from '@/app/components/PageFooterNav';
+import { Alert } from '@/app/components/Alert/styles';
 
 const Content = styled.div`
   overflow-y: auto;
@@ -31,6 +32,13 @@ export const Settle = () => {
         <code>payment.failed</code> event is returned with a descriptive error
         message.
       </p>
+
+      <Alert $variant="warning">
+        <strong>Warning:</strong> The <code>/settle</code> endpoint triggers a
+        real on-chain transaction. Once executed, the transfer cannot be
+        reversed. Ensure that payment headers are valid and that you are
+        connected to the correct network before submitting a settlement request.
+      </Alert>
 
       <Badge method="POST">POST</Badge>
       <br />
@@ -275,9 +283,9 @@ export const Settle = () => {
           title: 'Verify Payment',
           href: '/api/verify',
         }}
-        nextGroup={{
-          title: 'Schemas',
-          href: '/schema/payment-session',
+        next={{
+          title: 'Facilitator Funding',
+          href: '/api/funding',
         }}
       />
     </Content>

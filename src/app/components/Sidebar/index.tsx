@@ -1,3 +1,5 @@
+// src/app/components/APISidebar.tsx
+
 import React from 'react';
 import styled from 'styled-components';
 import { useLocation, Link as RouterLink } from 'react-router-dom';
@@ -43,7 +45,6 @@ const StyledLink = styled(RouterLink)<{ $active?: boolean }>`
     padding: 0.15rem 0.35rem;
     border-radius: 4px;
     color: ${({ children }) =>
-      // detect "POST" text content for color change
       React.Children.toArray(children).some(
         (child: any) =>
           child?.props?.className === 'method' &&
@@ -66,6 +67,11 @@ export const APISidebar: React.FC = () => {
     <SidebarContainer>
       <Section>
         <SectionTitle>Endpoints</SectionTitle>
+
+        <StyledLink to="/api/discover" $active={pathname === '/api/discover'}>
+          <span className="method">GET</span> Discover Facilitator
+        </StyledLink>
+
         <StyledLink to="/api/supported" $active={pathname === '/api/supported'}>
           <span className="method">GET</span> Get Kinds
         </StyledLink>
@@ -76,6 +82,10 @@ export const APISidebar: React.FC = () => {
 
         <StyledLink to="/api/settle" $active={pathname === '/api/settle'}>
           <span className="method">POST</span> Settle Payment
+        </StyledLink>
+
+        <StyledLink to="/api/funding" $active={pathname === '/api/funding'}>
+          <span className="method">GET</span> Facilitator Funding
         </StyledLink>
       </Section>
     </SidebarContainer>

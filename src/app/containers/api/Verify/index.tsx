@@ -5,6 +5,7 @@ import { CodeBlock } from '../../../components/CodeBlock';
 import { SchemaTable } from '../../../components/SchemaTable';
 import { Label } from '@/app/components/Label';
 import { PageFooterNav } from '@/app/components/PageFooterNav';
+import { Alert } from '@/app/components/Alert/styles';
 
 const Content = styled.div`
   overflow-y: auto;
@@ -27,6 +28,12 @@ export const Verify = () => {
         cryptographically valid, that the recipient, network, and asset match
         expectations, and that the payment has not expired.
       </p>
+      <Alert>
+        <strong>Info:</strong> Verification does not execute any transaction but
+        confirms that the signature and parameters are valid for settlement.
+        Always ensure the same network, recipient, and asset are used later
+        during settlement to prevent mismatched or failed payments.
+      </Alert>
       <Badge method="POST">POST</Badge>
       <br />
       <br />
@@ -198,16 +205,12 @@ export const Verify = () => {
 }`}</CodeBlock>
       <PageFooterNav
         prev={{
-          title: 'Get Kinds',
+          title: 'List Supported Kinds',
           href: '/api/supported',
         }}
         next={{
           title: 'Settle Payment',
           href: '/api/settle',
-        }}
-        nextGroup={{
-          title: 'Schemas',
-          href: '/schema/payment-session',
         }}
       />
     </Content>
