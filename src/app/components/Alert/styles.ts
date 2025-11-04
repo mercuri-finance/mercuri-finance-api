@@ -11,6 +11,7 @@ export const Alert = styled.div<AlertProps>`
   border-radius: 8px;
   margin: 2rem 0;
   line-height: 1.6;
+  font-weight: 300;
 
   ${({ $variant }) =>
     $variant === 'warning'
