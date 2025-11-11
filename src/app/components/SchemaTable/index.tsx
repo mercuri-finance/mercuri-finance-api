@@ -55,12 +55,6 @@ const Table = styled.table`
   }
 `;
 
-const TypeCell = styled.td`
-  white-space: nowrap;
-  font-family: 'JetBrains Mono', monospace;
-  color: #7de3c3;
-`;
-
 export interface SchemaField {
   name: string;
   type: string;

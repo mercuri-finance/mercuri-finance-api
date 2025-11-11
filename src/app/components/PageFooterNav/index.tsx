@@ -76,19 +76,14 @@ const GroupNav = styled.div`
   }
 `;
 
-type PageFooterNavProps = {
+interface Props {
   prev?: { title: string; href: string };
   next?: { title: string; href: string };
   prevGroup?: { title: string; href: string };
   nextGroup?: { title: string; href: string };
-};
+}
 
-export const PageFooterNav: React.FC<PageFooterNavProps> = ({
-  prev,
-  next,
-  prevGroup,
-  nextGroup,
-}) => {
+export function PageFooterNav({ prev, next, prevGroup, nextGroup }: Props) {
   return (
     <>
       <NavContainer single prev={!!prev} next={!!next}>
@@ -127,4 +122,4 @@ export const PageFooterNav: React.FC<PageFooterNavProps> = ({
       )}
     </>
   );
-};
+}

@@ -1,5 +1,4 @@
 import { PageFooterNav } from '@/app/components/PageFooterNav';
-import React from 'react';
 
 export default function FAQ() {
   return (

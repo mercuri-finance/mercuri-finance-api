@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { Label } from '@/app/components/Label';
 import { SchemaTable } from '@/app/components/SchemaTable';
 import { CodeBlock } from '@/app/components/CodeBlock';
@@ -15,7 +14,7 @@ const Content = styled.div`
   }
 `;
 
-export const PaymentResponse = () => {
+export function PaymentResponse(): JSX.Element {
   return (
     <Content>
       <h5>Schemas</h5>
@@ -112,4 +111,4 @@ export const PaymentResponse = () => {
       />
     </Content>
   );
-};
+}

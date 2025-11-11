@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { Copy } from 'lucide-react'; // simple icon (from lucide-react)
+import { Copy } from 'lucide-react';
 
 const Button = styled.button`
   position: absolute;
@@ -37,7 +37,7 @@ const CopiedMsg = styled.span`
   opacity: 0.9;
 `;
 
-export const CopyPageButton: React.FC = () => {
+export function CopyPageButton(): JSX.Element {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -57,4 +57,4 @@ export const CopyPageButton: React.FC = () => {
       {copied && <CopiedMsg>Copied!</CopiedMsg>}
     </>
   );
-};
+}

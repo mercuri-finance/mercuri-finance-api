@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Label } from '@/app/components/Label';
 import { SchemaTable } from '@/app/components/SchemaTable';

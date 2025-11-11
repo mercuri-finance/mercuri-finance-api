@@ -1,4 +1,3 @@
-// src/app/components/Alert.tsx
 import styled, { css } from 'styled-components';
 
 interface AlertProps {

@@ -40,24 +40,21 @@ const RightPanel = styled.div`
   position: relative;
 `;
 
-type LayoutProps = {
+interface Props {
   children: ReactNode;
-};
+}
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => (
-  <>
-    <Navigation />
-    <Grid>
-      {/* Sidebar handles navigation + sets the current endpoint */}
-      <APISidebar />
-
-      {/* Central content area */}
-      <Main>{children}</Main>
-
-      {/* Interactive tester */}
-      <RightPanel>
-        <RequestPanel />
-      </RightPanel>
-    </Grid>
-  </>
-);
+export function Layout({ children }: Props): JSX.Element {
+  return (
+    <>
+      <Navigation />
+      <Grid>
+        <APISidebar />
+        <Main>{children}</Main>
+        <RightPanel>
+          <RequestPanel />
+        </RightPanel>
+      </Grid>
+    </>
+  );
+}

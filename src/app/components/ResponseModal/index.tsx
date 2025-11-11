@@ -1,9 +1,7 @@
-// src/components/ResponseModal.tsx
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { CodeBlock } from '../CodeBlock';
-import { Button } from '../Button';
 
 const Overlay = styled.div`
   position: fixed;
@@ -45,10 +43,12 @@ const Content = styled.div`
   flex: 1;
 `;
 
-export const ResponseModal: React.FC<{
+interface Props {
   response: string;
   onClose: () => void;
-}> = ({ response, onClose }) => {
+}
+
+export function ResponseModal({ response, onClose }: Props): JSX.Element {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
@@ -69,4 +69,4 @@ export const ResponseModal: React.FC<{
     </Overlay>,
     document.body
   );
-};
+}

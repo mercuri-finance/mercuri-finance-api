@@ -18,7 +18,6 @@ export const GlobalStyles = createGlobalStyle`
     letter-spacing: 0.05em;
   }
 
-  /* ---------- Headings ---------- */
   h1, h2, h3, h4, h5, h6 {
     margin: 0 0 1rem;
     line-height: 1.2;
@@ -30,7 +29,6 @@ export const GlobalStyles = createGlobalStyle`
     color: #e3ffc1;
   }
 
-  /* ---------- Paragraphs ---------- */
   p {
     margin: 0 0 1.25rem;
     line-height: 1.6;
@@ -39,7 +37,6 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 300;
   }
 
-  /* ---------- Links ---------- */
   a {
     color: #e3ffc1;
     text-decoration: none;
@@ -51,7 +48,6 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  /* ---------- Inline Code ---------- */
   code {
     background: #1a1f26;
     padding: 0.15rem 0.35rem;
@@ -60,7 +56,6 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* ---------- Code Blocks ---------- */
   pre {
     background: #0e1217;
     padding: 1rem 1.25rem;
@@ -79,7 +74,6 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  /* ---------- Lists ---------- */
   ul, ol {
     margin: 1rem 0 1.25rem 1.5rem;
     padding: 0;
@@ -91,7 +85,6 @@ export const GlobalStyles = createGlobalStyle`
     margin-bottom: 0.5rem;
   }
 
-  /* ---------- Small Text ---------- */
   small {
     font-size: 0.875rem;
     line-height: 1.4;

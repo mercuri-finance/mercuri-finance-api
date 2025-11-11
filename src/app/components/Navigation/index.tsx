@@ -198,15 +198,13 @@ const WALLET_ICONS: Record<string, string> = {
   coinbase,
 };
 
-export function Navigation() {
+export function Navigation(): JSX.Element {
   const [showSearch, setShowSearch] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { walletInfo, connect, disconnect } = useWallet();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

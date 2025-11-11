@@ -24,7 +24,6 @@ import {
 const FACILITATOR = '2kQPdFFffYhskzSKX9uBYuDSWEuSphgJrVmcrofvVnMk';
 const USDC_MINT = '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
 
-/** 🔑 Approves the facilitator as delegate for this wallet’s USDC ATA */
 export async function ensureSolanaDelegateApproved(solanaWallet: any) {
   const connection = new Connection(
     'https://api.devnet.solana.com',
@@ -42,7 +41,6 @@ export async function ensureSolanaDelegateApproved(solanaWallet: any) {
     ASSOCIATED_TOKEN_PROGRAM_ID
   );
 
-  // Approve 1 USDC worth (6 decimals)
   const approveAmount = BigInt(1_000_000);
 
   const ix = createApproveCheckedInstruction(
@@ -63,8 +61,6 @@ export async function ensureSolanaDelegateApproved(solanaWallet: any) {
   const signedTx = await solanaWallet.signTransaction(tx);
   const sig = await connection.sendRawTransaction(signedTx.serialize());
   await connection.confirmTransaction(sig, 'confirmed');
-
-  console.log('Facilitator delegate approved:', sig);
 }
 
 const API_BASE = import.meta.env.VITE_FACILITATOR_URL;
@@ -153,10 +149,7 @@ export const RequestPanel = () => {
 
   // Predefined values
   const scheme = 'exact';
-  const asset =
-    network === 'solana-devnet'
-      ? USDC_MINT // ✅ Solana mint address
-      : USDC_ADDRESS; // ✅ EVM (Base Sepolia)
+  const asset = network === 'solana-devnet' ? USDC_MINT : USDC_ADDRESS;
   const description = 'USDC verification test';
   const maxAmountRequired = '1000';
   const maxTimeoutSeconds = 300;
@@ -170,15 +163,13 @@ export const RequestPanel = () => {
     }
 
     if (network?.startsWith('base')) {
-      // 🟢 EVM validation
       if (!ethers.isAddress(to.trim())) {
         setErrors({ to: 'Invalid Ethereum address' });
         return false;
       }
     } else if (network === 'solana-devnet') {
-      // 🟣 Solana validation
       try {
-        new PublicKey(to.trim()); // throws if invalid
+        new PublicKey(to.trim());
       } catch {
         setErrors({ to: 'Invalid Solana address' });
         return false;
@@ -192,8 +183,6 @@ export const RequestPanel = () => {
     return true;
   };
 
-  /** ✍️ Sign authorization to generate payment header */
-  /** ✍️ Sign authorization to generate payment header */
   const signAuthorization = async () => {
     if (!validateToAddress()) return;
 
@@ -206,12 +195,10 @@ export const RequestPanel = () => {
       const isEvm = network?.startsWith('base');
 
       if (isEvm) {
-        // 🧩 EVM logic (Base Sepolia)
         if (!window.ethereum) throw new Error('EVM wallet not available');
 
         const provider = new ethers.BrowserProvider(window.ethereum);
 
-        // Make sure we're on Base Sepolia (chainId 84532 / 0x14a34)
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x14a34' }],
@@ -224,7 +211,6 @@ export const RequestPanel = () => {
         const connectedAccount = walletInfo.address?.toLowerCase();
 
         if (activeAccount !== connectedAccount) {
-          // Ask for permissions if needed
           await window.ethereum.request({
             method: 'wallet_requestPermissions',
             params: [{ eth_accounts: {} }],
@@ -246,7 +232,6 @@ export const RequestPanel = () => {
         const fromAddr = await signer.getAddress();
         const net = await provider.getNetwork();
 
-        // Standard EIP-712 signing setup
         const valueUnits = ethers.parseUnits(value, 6);
         const validAfter = 0;
         const validBefore = Math.floor(Date.now() / 1000) + 3600;
@@ -304,7 +289,6 @@ export const RequestPanel = () => {
         setPaymentHeader(header);
         setSignStatus('success');
       } else if (network === 'solana-devnet') {
-        // ✅ Solana Devnet logic (supports Phantom & Solflare)
         const solanaWallet =
           (window.solana?.isPhantom && window.solana) ||
           (window.solflare?.isSolflare && window.solflare) ||
@@ -315,8 +299,6 @@ export const RequestPanel = () => {
         if (!solanaWallet.isConnected && solanaWallet.connect) {
           await solanaWallet.connect();
         }
-
-        // ✅ New step — delegate approval
         if (headings === 'settle') {
           await ensureSolanaDelegateApproved(solanaWallet);
         }
@@ -346,7 +328,6 @@ export const RequestPanel = () => {
         const message = JSON.stringify(messageObj);
         const encodedMsg = new TextEncoder().encode(message);
 
-        // 🟣 Signing (Phantom / Solflare)
         if (!solanaWallet.signMessage) {
           throw new Error('This wallet does not support message signing');
         }
@@ -370,7 +351,6 @@ export const RequestPanel = () => {
     }
   };
 
-  /** 🧾 Handle API request */
   const handleSend = async () => {
     try {
       setSendingLoading(true);
@@ -430,7 +410,6 @@ export const RequestPanel = () => {
   };
 
   useEffect(() => {
-    // Reset all state when switching between playground routes
     setTo('');
     setPaymentHeader('');
     setResponse('');
@@ -442,7 +421,6 @@ export const RequestPanel = () => {
     setShowModal(false);
   }, [headings]);
 
-  /** Helper to show dynamic button text */
   const getSignButtonText = () => {
     switch (signStatus) {
       case 'signing':
@@ -469,7 +447,6 @@ export const RequestPanel = () => {
     }
   };
 
-  /** Reset signature if recipient changes */
   const handleToChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTo(e.target.value);
     if (errors.to) setErrors({});
@@ -483,7 +460,6 @@ export const RequestPanel = () => {
   return (
     <Wrapper>
       <ScrollArea>
-        {/* 🧭 Show API Playground only for certain pages */}
         {['supported', 'discover', 'funding', 'verify', 'settle'].includes(
           headings
         ) ? (
@@ -588,9 +564,9 @@ export const RequestPanel = () => {
                           onClick={handleSend}
                           disabled={
                             sendingLoading ||
-                            signStatus !== 'success' || // 👈 disable until signed
-                            !paymentHeader || // 👈 just extra safety
-                            !to // 👈 also make sure "to" field isn’t empty
+                            signStatus !== 'success' ||
+                            !paymentHeader ||
+                            !to
                           }
                         >
                           {sendingLoading ? (

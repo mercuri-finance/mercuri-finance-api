@@ -8,10 +8,7 @@ import { Funding } from './containers/api/funding/index.js';
 export function App(): JSX.Element {
   return (
     <Routes>
-      {/* Redirect root → docs intro */}
       <Route path="/" element={<Navigate to="/api/discover" replace />} />
-
-      {/* Fallback or overview */}
       <Route path="/api/discover" element={<Discover />} />
       <Route path="/api/funding" element={<Funding />} />
       <Route path="/api/verify" element={<Verify />} />

@@ -26,7 +26,6 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   const [network, setNetwork] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
 
-  // Load saved session
   useEffect(() => {
     const stored = sessionStorage.getItem('walletInfo');
     const storedNetwork = sessionStorage.getItem('network');
@@ -40,7 +39,6 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     if (storedNetwork) setNetwork(storedNetwork);
   }, []);
 
-  // Persist session
   useEffect(() => {
     if (walletInfo)
       sessionStorage.setItem('walletInfo', JSON.stringify(walletInfo));
@@ -52,7 +50,6 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     else sessionStorage.removeItem('network');
   }, [network]);
 
-  /** Unified connect handler */
   const connect = async (type: WalletType) => {
     setIsConnecting(true);
     try {
@@ -70,14 +67,12 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  /** 🦊 EVM (MetaMask / Base Wallet) — only Base Sepolia allowed */
   const connectEvmWallet = async (type: WalletType) => {
     if (!window.ethereum) throw new Error('EVM wallet not detected');
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const net = await provider.getNetwork();
 
-    // If not Base Sepolia (84532), switch automatically
     if (Number(net.chainId) !== 84532) {
       try {
         await window.ethereum.request({
@@ -99,7 +94,6 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     setWalletInfo({ address, type });
   };
 
-  /** 👻 Phantom (Solana) — force Devnet */
   const connectPhantom = async () => {
     if (!window.solana?.isPhantom)
       throw new Error('Phantom wallet not detected');
@@ -107,12 +101,10 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     const resp = await window.solana.connect();
     const address = resp.publicKey.toString();
 
-    // We can’t programmatically switch cluster — assume Devnet for playground
     setNetwork('solana-devnet');
     setWalletInfo({ address, type: 'phantom' });
   };
 
-  /** 🔥 Solflare (Solana) — force Devnet */
   const connectSolflare = async () => {
     const solflare = window.solflare || window.solflareSolana;
     if (!solflare?.isSolflare) throw new Error('Solflare wallet not detected');
@@ -120,12 +112,10 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     await solflare.connect();
     const address = solflare.publicKey.toString();
 
-    // Same limitation as Phantom
     setNetwork('solana-devnet');
     setWalletInfo({ address, type: 'solflare' });
   };
 
-  /** Disconnect */
   const disconnect = () => {
     setWalletInfo(null);
     setNetwork(null);
@@ -133,7 +123,6 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     sessionStorage.removeItem('network');
   };
 
-  /** Ensure correct network */
   const ensureCorrectNetwork = async () => {
     if (
       (walletInfo?.type === 'metamask' || walletInfo?.type === 'base') &&
@@ -151,7 +140,6 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     if (walletInfo?.type === 'phantom' || walletInfo?.type === 'solflare') {
-      // silently assume devnet; we can’t change programmatically
       setNetwork('solana-devnet');
     }
   };
@@ -178,7 +166,6 @@ export const useWallet = () => {
   return ctx;
 };
 
-// global types
 declare global {
   interface Window {
     solana?: any;

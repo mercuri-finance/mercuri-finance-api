@@ -37,5 +37,4 @@ export const searchIndex: SearchEntry[] = [
     path: 'https://docs.mercuri.finance/docs/introduction/platform-overview',
     group: 'Documentation',
   },
-  // ...add more entries as needed
 ];

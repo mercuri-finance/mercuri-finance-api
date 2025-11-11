@@ -1,8 +1,8 @@
 import React from 'react';
 
-type Props = {
+interface Props {
   children: string;
-};
+}
 
 export function GreenDotsText({ children }: Props) {
   return (

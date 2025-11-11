@@ -15,7 +15,7 @@ const Content = styled.div`
   }
 `;
 
-export const PaymentSession = () => {
+export function PaymentSession(): JSX.Element {
   return (
     <Content>
       <h5>Schemas</h5>
@@ -120,4 +120,4 @@ export const PaymentSession = () => {
       />
     </Content>
   );
-};
+}

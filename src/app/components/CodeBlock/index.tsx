@@ -2,21 +2,13 @@ import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { Copy } from 'lucide-react';
 import Prism from 'prismjs';
-
-// === Import only the grammars you need ===
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-http';
-
-// === (Optional) Import base token classes (we override colors below) ===
 import 'prismjs/themes/prism-tomorrow.css';
-
-/* ------------------------------------------------------------------ */
-/* ------------------------ Styled Components ----------------------- */
-/* ------------------------------------------------------------------ */
 
 const Wrapper = styled.div<{ isModal: boolean }>`
   position: relative;
@@ -117,25 +109,19 @@ const StyledPre = styled.pre<{ isModal: boolean }>`
   }
 `;
 
-/* ------------------------------------------------------------------ */
-/* ------------------------- Highlight Logic ------------------------ */
-/* ------------------------------------------------------------------ */
-
 const highlightCode = (language: string | undefined, text: string): string => {
   const lang = (language || '').toLowerCase();
   const grammar = Prism.languages[lang] || Prism.languages.javascript;
   return Prism.highlight(text, grammar, lang);
 };
 
-/* ------------------------------------------------------------------ */
-/* --------------------------- Component ---------------------------- */
-/* ------------------------------------------------------------------ */
-
-export const CodeBlock: React.FC<{
+interface Props {
   language?: string;
   isModal?: boolean;
   children: string;
-}> = ({ language, isModal = false, children }) => {
+}
+
+export function CodeBlock({ language, isModal = false, children }: Props) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -166,4 +152,4 @@ export const CodeBlock: React.FC<{
       </StyledPre>
     </Wrapper>
   );
-};
+}
