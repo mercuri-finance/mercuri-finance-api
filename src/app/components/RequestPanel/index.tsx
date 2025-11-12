@@ -65,8 +65,8 @@ export async function ensureSolanaDelegateApproved(solanaWallet: any) {
 
 const API_BASE = import.meta.env.VITE_FACILITATOR_URL;
 
-const USDC_ADDRESS = '0x1234567890abcdef1234567890abcdef12345678';
-const TOKEN_NAME = 'USD Coin';
+const USDC_ADDRESS = '0x036cbd53842c5426634e7929541ec2318f3dcf7e';
+const TOKEN_NAME = 'USDC'; //testnet USDC - Mainned USD Coin
 const TOKEN_VERSION = '2';
 
 const Wrapper = styled.div`
@@ -243,6 +243,8 @@ export const RequestPanel = () => {
           chainId: Number(net.chainId),
           verifyingContract: USDC_ADDRESS,
         };
+
+        console.log(domain);
 
         const types = {
           TransferWithAuthorization: [

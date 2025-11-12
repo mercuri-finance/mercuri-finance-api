@@ -88,7 +88,7 @@ export const Discover = () => {
     "schemes": ["exact"],
     "networks": ["base", "solana-mainnet"],
     "assets": [
-      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
       "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     ]
   }
